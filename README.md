@@ -40,14 +40,17 @@ python run.py --data_root data/images --mask_root data/masks --model_path checkp
 ```
 ## Training procedure
 To fully exploit the performance of the network, we suggest to use the following training procedure, in specific
+
 1. Train the network, i.e. use the command
 ```
 python run.py
 ```
+
 2. Finetune the network, i.e. use the command
 ```
 python run.py --finetune --model_path path-to-trained-generator
 ```
+
 3. Test the model
 ```
 python run.py --test
@@ -65,8 +68,11 @@ After training, we can test the data. At this time, a dataloader that provides t
 ## Building your own method
 To modify the method or build your own method based on this code, you can do this by changing the `RFRNet.py` and `model.py` files.
 Some examples are given below:
+
 To change the training targets for generator, you can modify the `get_g_loss` method in model.py.
+
 To change the architecture of the model, you might want to modify the `RFRNet.py` file.
+
 To add a discriminator for the RFR-Net, you need to 1.define the discirminator and its optimizer in `initialize_model` and `cuda` methods and 2.define the new loss functions for thediscriminator and generator and 3. define parameter updating procedure in `update_D` method.
 ## Improving the code
 This code will be improved constantly. More functions for visualization are still to be developed.
