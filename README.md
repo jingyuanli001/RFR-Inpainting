@@ -1,10 +1,15 @@
 # Recurrent Feature Reasoning for Image Inpainting
 ## Requirements
 Python >= 3.5
+
 PyTorch >= 1.0.0
+
 Opencv2 ==3.4.1
+
 Scipy == 1.1.0
+
 Numpy == 1.14.3
+
 Scikit-image (skimage) == 0.13.1
 
 This is the environment for our experiments. Later versions of these packages might need a few modifications of the code and it could lead to a decay of the performance (We are still checking this).
@@ -59,7 +64,9 @@ python run.py --test
 This part is for people who want to build their own methods based on this code.
 
 The core of this code is the `model.py` file. In specific, it defines the organization of the model, training procedures, loss functions and the parameter updating procedure.
+
 Before we start training/testing, the model and its components are initialized by `initialize_model(self, path=None, train=True)` method which builds a randomly initialized model and tries to load the pretrained parameters. The pipeline of the initialized model is provided in `modules`(The RFR-Net in our case).
+
 After the model is initialized, the method `cuda(self, path=None, train=True)` is called, which moves the model to the gpu given there exists avaliable cuda devices.
 
 When training the network, `train(self, train_loader, save_path, finetune = False)`  is called. This method requires an external dataloader that provides images and masks and the path to save the model. Given the dataloader correctly produces training data, the forward and backward propagation procedures are alternatively performed by calling `forward(self, masked_image, mask, gt_image)` and `update_parameters(self)`. The `forward` method simply feeds the data to the generator network and saves the output results. The `update_parameters(self)` updates the generator and discriminator separately (in our case, the discriminator doesn't exist). When updating the generator and discriminator, we calculate the loss functions and update the parameters.
