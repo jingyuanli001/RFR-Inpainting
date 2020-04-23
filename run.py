@@ -6,8 +6,8 @@ from torch.utils.data import DataLoader
 
 def run():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_root', type=str, default='../../Dataset/Pairs_street_view/paris_arged')
-    parser.add_argument('--mask_root', type=str, default='../../Dataset/irregular_mask/testing_mask_dataset_arged')
+    parser.add_argument('--data_root', type=str, default='../../Dataset/Pairs_street_view/paris_auged')
+    parser.add_argument('--mask_root', type=str, default='../../Dataset/irregular_mask/testing_mask_dataset_auged')
     parser.add_argument('--model_save_path', type=str, default='checkpoint')
     parser.add_argument('--result_save_path', type=str, default='results')
     parser.add_argument('--target_size', type=int, default=256)
