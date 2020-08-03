@@ -82,7 +82,7 @@ class RFRNetModel():
             para.requires_grad = False
         count = 0
         for items in test_loader:
-            gt_images, masks = self.cuda(*items)
+            gt_images, masks = self.__cuda__(*items)
             masked_images = gt_images * masks
             masks = torch.cat([masks]*3, dim = 1)
             fake_B, mask = self.G(masked_images, masks)
@@ -92,11 +92,11 @@ class RFRNetModel():
             for k in range(comp_B.size(0)):
                 count += 1
                 grid = make_grid(comp_B[k:k+1])
-                file_path = '{:s}/result_final/img_{:d}.png'.format(result_save_path, count)
+                file_path = '{:s}/results/img_{:d}.png'.format(result_save_path, count)
                 save_image(grid, file_path)
                 
                 grid = make_grid(masked_images[k:k+1] +1 - masks[k:k+1] )
-                file_path = '{:s}/result_final/masked_img_{:d}.png'.format(result_save_path, count)
+                file_path = '{:s}/results/masked_img_{:d}.png'.format(result_save_path, count)
                 save_image(grid, file_path)
     
     def forward(self, masked_image, mask, gt_image):
