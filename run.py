@@ -12,6 +12,7 @@ def run():
     parser.add_argument('--result_save_path', type=str, default='results')
     parser.add_argument('--target_size', type=int, default=256)
     parser.add_argument('--mask_mode', type=int, default=0)
+    parser.add_argument('--num_iters', type=int, default=450000)
     parser.add_argument('--model_path', type=str, default="checkpoint/100000.pth")
     parser.add_argument('--batch_size', type=int, default=6)
     parser.add_argument('--n_threads', type=int, default=6)
@@ -31,7 +32,7 @@ def run():
         model.initialize_model(args.model_path, True)
         model.cuda()
         dataloader = DataLoader(Dataset(args.data_root, args.mask_root, args.mask_mode, args.target_size, mask_reverse = True), batch_size = args.batch_size, shuffle = True, num_workers = args.n_threads)
-        model.train(dataloader, args.model_save_path, args.finetune)
+        model.train(dataloader, args.model_save_path, args.finetune, args.num_iters)
 
 if __name__ == '__main__':
     run()

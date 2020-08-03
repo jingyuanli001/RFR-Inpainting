@@ -29,7 +29,6 @@ class RFRNetModel():
             self.optm_G = optim.Adam(self.G.parameters(), lr = 2e-4)
         try:
             start_iter = load_ckpt(path, [('generator', self.G)], [('optimizer_G', self.optm_G)])
-            print("here")
             if train:
                 self.optm_G = optim.Adam(self.G.parameters(), lr = 2e-4)
                 print('Model Initialized, iter: ', start_iter)
@@ -48,15 +47,14 @@ class RFRNetModel():
         else:
             self.device = torch.device("cpu")
         
-    def train(self, train_loader, save_path, finetune = False):
+    def train(self, train_loader, save_path, finetune = False, iters=450000):
     #    writer = SummaryWriter(log_dir="log_info")
         self.G.train(finetune = finetune)
         if finetune:
             self.optm_G = optim.Adam(filter(lambda p:p.requires_grad, self.G.parameters()), lr = 5e-5)
-        keep_training = True
         print("Starting training from iteration:{:d}".format(self.iter))
         s_time = time.time()
-        while keep_training:
+        while self.iter<iters:
             for items in train_loader:
                 gt_images, masks = self.__cuda__(*items)
                 masked_images = gt_images * masks
@@ -74,8 +72,10 @@ class RFRNetModel():
                 if self.iter % 40000 == 0:
                     if not os.path.exists('{:s}'.format(save_path)):
                         os.makedirs('{:s}'.format(save_path))
-                    save_ckpt('{:s}/g_{:d}.pth'.format(save_path, self.iter ), [('generator', self.G)], [('optimizer_G', self.optm_G)], self.iter )
-        
+                    save_ckpt('{:s}/g_{:d}.pth'.format(save_path, self.iter ), [('generator', self.G)], [('optimizer_G', self.optm_G)], self.iter)
+        if not os.path.exists('{:s}'.format(save_path)):
+            os.makedirs('{:s}'.format(save_path))
+            save_ckpt('{:s}/g_{:s}.pth'.format(save_path, "final"), [('generator', self.G)], [('optimizer_G', self.optm_G)], self.iter)
     def test(self, test_loader, result_save_path):
         self.G.eval()
         for para in self.G.parameters():

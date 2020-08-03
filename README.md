@@ -15,6 +15,8 @@ Scikit-image (skimage) == 0.13.1
 This is the environment for our experiments. Later versions of these packages might need a few modifications of the code and it could lead to a decay of the performance (We are still checking this).
 
 Although our method is not limited to any specific cuda and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run extremely slow in older cuda verision due to its recurrent design.
+
+The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration. 
 ## Running the program
 To perform training or testing, use 
 ```
