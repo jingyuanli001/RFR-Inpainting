@@ -67,6 +67,7 @@ class Dataset(torch.utils.data.Dataset):
         #generate random mask
         if self.mask_type == 1:
             mask = 1 - generate_stroke_mask([256, 256])
+            mask = self.resize(mask, True, True, True)
             return (mask * 255).astype(np.uint8)
         
         #external mask, fixed order

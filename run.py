@@ -6,12 +6,12 @@ from torch.utils.data import DataLoader
 
 def run():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_root', type=str, default='../../Dataset/Pairs_street_view/paris_auged')
-    parser.add_argument('--mask_root', type=str, default='../../Dataset/irregular_mask/testing_mask_dataset_auged')
+    parser.add_argument('--data_root', type=str)
+    parser.add_argument('--mask_root', type=str)
     parser.add_argument('--model_save_path', type=str, default='checkpoint')
     parser.add_argument('--result_save_path', type=str, default='results')
     parser.add_argument('--target_size', type=int, default=256)
-    parser.add_argument('--mask_mode', type=int, default=0)
+    parser.add_argument('--mask_mode', type=int, default=1)
     parser.add_argument('--num_iters', type=int, default=450000)
     parser.add_argument('--model_path', type=str, default="checkpoint/100000.pth")
     parser.add_argument('--batch_size', type=int, default=6)
