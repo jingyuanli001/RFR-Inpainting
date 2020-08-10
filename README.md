@@ -16,7 +16,18 @@ This is the environment for our experiments. Later versions of these packages mi
 
 Although our method is not limited to any specific cuda and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run extremely slow in older cuda verision due to its recurrent design.
 
-The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration. 
+The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration. \
+
+## Pretrained Models
+
+The link to the pretrained model.
+
+https://drive.google.com/drive/folders/1EbRSL6SlJqeMliT9qU8V5g0idJqvirZr?usp=sharing
+
+Currently there is only a pretrained model on Paris StreetView Dataset. The model for CelebA will be added this week. The model for Places2 will be released later. 
+
+We strongly encourage the users to retrain the models if they are used for academic purpose, to ensure fair comparisons (which has been strongly desired). Achieving a good performance using the current version of code should not be difficult.
+
 ## Running the program
 To perform training or testing, use 
 ```
@@ -62,7 +73,22 @@ python run.py --finetune --model_path path-to-trained-generator
 ```
 python run.py --test
 ```
+## How long to train the model for
+
+All the descriptions below are under the assumption that the size of mini-batch is 6
+
+For Paris Street View Dataset, train the model for 400,000 iterations and finetune for 200,000 iterations. (600,000 in total)
+
+For CelebA Dataset, train the model for 350,000 iterations and finetune for 150,000 iterations. (500,000 in total)
+
+For Places2 Challenge Dataset, train the model for 2,000,000 iterations and finetune for 1,000,000 iterations. (3,000,000 in total)
+
+## Some results from this model
+
+
+
 ## The organization of this code
+
 This part is for people who want to build their own methods based on this code.
 
 The core of this code is the `model.py` file. In specific, it defines the organization of the model, training procedures, loss functions and the parameter updating procedure.
@@ -86,6 +112,15 @@ To add a discriminator for the RFR-Net, you need to 1.define the discirminator a
 ## Improving the code
 This code will be improved constantly. More functions for visualization are still to be developed.
 ## Citation
-To appear
+If you find this article or code useful for your project, please refer to
+```
+@InProceedings{Li_2020_CVPR,
+	author = {Li, Jingyuan and Wang, Ning and Zhang, Lefei and Du, Bo and Tao, Dacheng},
+	title = {Recurrent Feature Reasoning for Image Inpainting},
+	booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+	month = {June},
+	year = {2020}
+}
+```
 ## Paper
 See the Paper folder
