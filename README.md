@@ -83,10 +83,6 @@ For CelebA Dataset, train the model for 350,000 iterations and finetune for 150,
 
 For Places2 Challenge Dataset, train the model for 2,000,000 iterations and finetune for 1,000,000 iterations. (3,000,000 in total)
 
-## Some results from this model
-
-
-
 ## The organization of this code
 
 This part is for people who want to build their own methods based on this code.
