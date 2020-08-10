@@ -12,11 +12,11 @@ Numpy == 1.14.3
 
 Scikit-image (skimage) == 0.13.1
 
-This is the environment for our experiments. Later versions of these packages might need a few modifications of the code and it could lead to a decay of the performance (We are still checking this).
+This is the environment for our experiments. Later versions of these packages might need a few modifications of the code.
 
-Although our method is not limited to any specific cuda and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run extremely slow in older cuda verision due to its recurrent design.
+Although our method is not limited to any specific CUDA and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run slowly in older CUDA version due to its recurrent design.
 
-The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration. \
+The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration.  If you are fixing small holes, you can use that version of code, to gain some speep-up.
 
 ## Pretrained Models
 
@@ -26,7 +26,14 @@ https://drive.google.com/drive/folders/1EbRSL6SlJqeMliT9qU8V5g0idJqvirZr?usp=sha
 
 Currently there is only a pretrained model on Paris StreetView Dataset. The model for CelebA will be added this week. The model for Places2 will be released later. 
 
-We strongly encourage the users to retrain the models if they are used for academic purpose, to ensure fair comparisons (which has been strongly desired). Achieving a good performance using the current version of code should not be difficult.
+We strongly encourage the users to retrain the models if they are used for academic purpose, to ensure fair comparisons (which has been always desired). Achieving a good performance using the current version of code should not be difficult.
+
+## Reproducibility
+
+We've checked the performance of the pretrained model. 
+| |Reproducible|
+|:----:|:----:|
+|Paris StreetView|True|
 
 ## Running the program
 To perform training or testing, use 
@@ -104,11 +111,11 @@ To change the training targets for generator, you can modify the `get_g_loss` me
 
 To change the architecture of the model, you might want to modify the `RFRNet.py` file.
 
-To add a discriminator for the RFR-Net, you need to 1.define the discirminator and its optimizer in `initialize_model` and `cuda` methods and 2.define the new loss functions for thediscriminator and generator and 3. define parameter updating procedure in `update_D` method.
+To add a discriminator for the RFR-Net, you need to 1.define the discirminator and its optimizer in `initialize_model` and `cuda` methods and 2.define the new loss functions for the discriminator and generator and 3. define parameter updating procedure in `update_D` method.
 ## Improving the code
 This code will be improved constantly. More functions for visualization are still to be developed.
 ## Citation
-If you find this article or code useful for your project, please refer to
+If you find the article or code useful for your project, please refer to
 ```
 @InProceedings{Li_2020_CVPR,
 	author = {Li, Jingyuan and Wang, Ning and Zhang, Lefei and Du, Bo and Tao, Dacheng},

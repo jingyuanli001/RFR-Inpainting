@@ -26,7 +26,7 @@ def run():
     if args.test:
         model.initialize_model(args.model_path, False)
         model.cuda()
-        dataloader = DataLoader(Dataset(args.data_root, args.mask_root, args.mask_mode, args.target_size, mask_reverse = True))
+        dataloader = DataLoader(Dataset(args.data_root, args.mask_root, args.mask_mode, args.target_size, mask_reverse = True, training=False))
         model.test(dataloader, args.result_save_path)
     else:
         model.initialize_model(args.model_path, True)
