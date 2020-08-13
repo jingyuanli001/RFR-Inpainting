@@ -1,7 +1,7 @@
 # Recurrent Feature Reasoning for Image Inpainting
 ## Requirements
 Python >= 3.5
-
+---
 PyTorch >= 1.0.0
 
 Opencv2 ==3.4.1
@@ -14,7 +14,7 @@ Scikit-image (skimage) == 0.13.1
 
 This is the environment for our experiments. Later versions of these packages might need a few modifications of the code.
 
-Although our method is not limited to any specific CUDA and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run slowly in older CUDA version due to its recurrent design.
+Although our method is not limited to any specific CUDA and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run slowly in older CUDA version due to its recurrent design.----
 
 The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration.  If you are fixing small holes, you can use that version of code, to gain some speep-up.
 
@@ -35,7 +35,16 @@ We've checked the performance of the pretrained model.
 |:----:|:----:|
 |Paris StreetView|True|
 
+![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_321.png)
+
+![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_321.png)
+
+![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_326.png)
+
+![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_326.png)
+
 ## Running the program
+
 To perform training or testing, use 
 ```
 python run.py
