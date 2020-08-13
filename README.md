@@ -16,8 +16,6 @@ This is the environment for our experiments. Later versions of these packages mi
 
 Although our method is not limited to any specific CUDA and cudnn version, it's strongly encouraged that you use the latest version of these toolkits. It seems that the RFR-Net could run slowly in older CUDA version due to its recurrent design.----
 
-The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration.  If you are fixing small holes, you can use that version of code, to gain some speep-up.
-
 ## Pretrained Models
 
 The link to the pretrained model.
@@ -28,20 +26,17 @@ Currently there is only a pretrained model on Paris StreetView Dataset. The mode
 
 We strongly encourage the users to retrain the models if they are used for academic purpose, to ensure fair comparisons (which has been always desired). Achieving a good performance using the current version of code should not be difficult.
 
+## Results (From Pretrained models)
+
+| ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_321.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_321.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_326.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_326.png) |
+|:-|:-|:-|:-|
+
 ## Reproducibility
 
 We've checked the performance of the pretrained model. 
 | |Reproducible|
 |:----:|:----:|
 |Paris StreetView|True|
-
-![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_321.png)
-
-![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_321.png)
-
-![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_326.png)
-
-![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_326.png)
 
 ## Running the program
 
@@ -72,6 +67,7 @@ to test the network
 ```
 python run.py --data_root data/images --mask_root data/masks --model_path checkpoints/g_10000.pth --test --mask_mode 2
 ```
+The RFR-Net for filling smaller holes is added. The only difference is the smaller number of pixels fixed in each iteration.  If you are fixing small holes, you can use that version of code, to gain some speep-up.
 ## Training procedure
 To fully exploit the performance of the network, we suggest to use the following training procedure, in specific
 
