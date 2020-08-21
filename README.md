@@ -19,7 +19,7 @@ Although our method is not limited to any specific CUDA and cudnn version, it's 
 
 ## Pretrained Models
 
-The link to the pretrained model.
+The link to the pretrained model. (Currently, Paris StreetView, CelebA datasets)
 
 https://drive.google.com/drive/folders/1EbRSL6SlJqeMliT9qU8V5g0idJqvirZr?usp=sharing
 
@@ -39,7 +39,6 @@ We've checked the reproducibilities of the results in the paper.
 | |Reproducible|
 |:----:|:----:|
 |Paris StreetView|True|
-|:----:|:----:|
 |CelebA|True|
 
 ## Running the program
