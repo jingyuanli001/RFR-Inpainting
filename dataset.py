@@ -68,7 +68,7 @@ class Dataset(torch.utils.data.Dataset):
                 return mask * 255
         #generate random mask
         if self.mask_type == 1:
-            mask = 1 - generate_stroke_mask([256, 256])
+            mask = 1 - generate_stroke_mask([self.target_size, self.target_size])
             mask = self.resize(mask,False)
             return (mask>0).astype(np.uint8)* 255
         
