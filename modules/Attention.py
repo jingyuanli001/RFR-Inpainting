@@ -14,7 +14,7 @@ class KnowledgeConsistentAttention(nn.Module):
         self.ratio = nn.Parameter(torch.ones(1))
         
     def forward(self, foreground, masks):
-        bz, nc, w, h = foreground.size()
+        bz, nc, h, w = foreground.size()
         if masks.size(3) != foreground.size(3):
             masks = F.interpolate(masks, foreground.size()[2:])
         background = foreground.clone()
