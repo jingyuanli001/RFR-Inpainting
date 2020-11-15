@@ -6,7 +6,8 @@ import random
 import numpy as np
 import torchvision.transforms.functional as F
 from PIL import Image
-from scipy.misc import imread
+# from scipy.misc import imread
+from imageio import imread
 import cv2
 
 class Dataset(torch.utils.data.Dataset):
@@ -60,8 +61,8 @@ class Dataset(torch.utils.data.Dataset):
         if self.mask_type == 0:
             mask_index = random.randint(0, len(self.mask_data) - 1)
             mask = imread(self.mask_data[mask_index])
-            mask = self.resize(mask, False)
             mask = (mask > 0).astype(np.uint8)       # threshold due to interpolation
+            mask = self.resize(mask, False)
             if self.mask_reverse:
                 return (1 - mask) * 255
             else:
@@ -69,15 +70,16 @@ class Dataset(torch.utils.data.Dataset):
         #generate random mask
         if self.mask_type == 1:
             mask = 1 - generate_stroke_mask([self.target_size, self.target_size])
+            mask = (mask>0).astype(np.uint8)* 255
             mask = self.resize(mask,False)
-            return (mask>0).astype(np.uint8)* 255
+            return mask
         
         #external mask, fixed order
         if self.mask_type == 2:
             mask_index = index
             mask = imread(self.mask_data[mask_index])
-            mask = self.resize(mask, False)
             mask = (mask > 0).astype(np.uint8)       # threshold due to interpolation
+            mask = self.resize(mask, False)
             if self.mask_reverse:
                 return (1 - mask) * 255
             else:
@@ -122,7 +124,8 @@ class Dataset(torch.utils.data.Dataset):
                     h_start = random.randrange(0, j)
                     w_start = random.randrange(0, i)
                     img = img[h_start:h_start + side, w_start:w_start + side, ...]
-        img = scipy.misc.imresize(img, [self.target_size, self.target_size])
+        # img = scipy.misc.imresize(img, [self.target_size, self.target_size])
+        img = np.array(Image.fromarray(img).resize(size=(self.target_size, self.target_size)))
         return img
 
     def to_tensor(self, img):
