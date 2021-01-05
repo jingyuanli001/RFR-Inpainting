@@ -19,7 +19,7 @@ Although our method is not limited to any specific CUDA and cudnn version, it's 
 
 ## Pretrained Models
 
-The link to the pretrained model. (Currently, Paris StreetView, CelebA datasets)
+The link to the pretrained model. (Currently, Paris StreetView, CelebA datasets). We are expecting to release the Places2 weights before the end of January, we are sorry for the delay caused by the failure in our storage system.
 
 https://drive.google.com/drive/folders/1EbRSL6SlJqeMliT9qU8V5g0idJqvirZr?usp=sharing
 
