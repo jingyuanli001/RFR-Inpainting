@@ -1,4 +1,5 @@
 # Recurrent Feature Reasoning for Image Inpainting
+Accepted in [CVPR 2020](https://openaccess.thecvf.com/content_CVPR_2020/html/Li_Recurrent_Feature_Reasoning_for_Image_Inpainting_CVPR_2020_paper)
 ## Requirements
 
 Python >= 3.5
