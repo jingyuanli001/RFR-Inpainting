@@ -136,3 +136,113 @@ If you find the article or code useful for your project, please refer to
 ```
 ## Paper
 See the Paper folder
+
+
+
+# Penalaran Fitur Berulang untuk Gambar Inpainting
+Diterima di [CVPR 2020](https://openaccess.thecvf.com/content_CVPR_2020/html/Li_Recurrent_Feature_Reasoning_for_Image_Inpainting_CVPR_2020_paper)
+## Persyaratan
+
+Python >= 3.5
+
+PyTorch >= 1.0.0
+
+Opencv2 = 3.4.1
+
+Scipy == 1.1.0
+
+Numpy == 1.14.3
+
+Scikit-gambar (skimage) == 0.13.1
+
+Ini adalah lingkungan untuk eksperimen kami. Versi selanjutnya dari paket ini mungkin memerlukan beberapa modifikasi kode.
+
+Meskipun metode kami tidak terbatas pada versi CUDA dan cudnn tertentu, sangat disarankan agar Anda menggunakan versi terbaru dari toolkit ini. Tampaknya RFR-Net dapat berjalan lambat di versi CUDA yang lebih lama karena desainnya yang berulang.
+
+## Model Terlatih
+
+Tautan ke model yang telah dilatih sebelumnya. (Saat ini, kumpulan data Paris StreetView, CelebA). Kami mengharapkan untuk merilis bobot Places2 sebelum akhir Januari, kami mohon maaf atas keterlambatan yang disebabkan oleh kegagalan dalam sistem penyimpanan kami.
+
+https://drive.google.com/drive/folders/1EbRSL6SlJqeMliT9qU8V5g0idJqvirZr?usp=sharing
+
+Kami sangat mendorong pengguna untuk melatih kembali model jika digunakan untuk tujuan akademis, untuk memastikan perbandingan yang adil (yang selalu diinginkan). Mencapai kinerja yang baik menggunakan versi kode saat ini seharusnya tidak sulit.
+
+## Hasil (Dari model yang telah dilatih sebelumnya)
+
+| ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_321.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_321.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_326.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_326.png) |
+| -------------------------------------------------- ---------- | -------------------------------------------------- ---------- | -------------------------------------------------- ---------- | -------------------------------------------------- ---------- |
+| ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_106.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_106.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/masked_img_586.png) | ![avatar](https://github.com/jingyuanli001/RFR-Inpainting/blob/master/results/img_586.png) |
+
+-----------------------------------
+TRANSLATED INDONESIAN
+
+## Reproduksibilitas
+
+Kami telah memeriksa reproduktifitas hasil di koran.
+| |Direproduksi|
+|:----:|:----:|
+|Paris StreetView|Benar|
+|CelebA|Benar|
+
+## Menjalankan program
+
+Untuk melakukan pelatihan atau pengujian, gunakan
+```
+python run.py
+```
+Ada beberapa argumen yang dapat digunakan, yaitu
+```
+--data_root +str #di mana mendapatkan gambar untuk pelatihan/pengujian
+--mask_root +str #di mana mendapatkan masker untuk pelatihan/pengujian
+--model_save_path +str #tempat menyimpan model selama pelatihan
+--result_save_path +str #tempat menyimpan hasil inpainting selama pengujian
+--model_path +str #generator terlatih untuk digunakan selama pelatihan/pengujian
+--target_size +int #ukuran gambar dan topeng
+--mask_mode +int #masker jenis apa yang akan digunakan, 0 untuk masker eksternal dengan urutan acak, 1 untuk masker yang dibuat secara acak, 2 untuk masker eksternal dengan urutan tetap
+--batch_size +int #ukuran mini-batch untuk pelatihan
+--n_threads +int
+--gpu_id +int #gpu mana yang akan digunakan
+--finetune #untuk menyempurnakan model selama pelatihan
+--test #test modelnya
+```
+Misalnya, untuk melatih jaringan menggunakan GPU 1, dengan model yang telah dilatih sebelumnya
+```
+python run.py --data_root data --mask_root mask --model_path checkpoints/g_10000.pth --batch_size 6 --gpu 1
+```
+untuk menguji jaringan
+```
+python run.py --data_root data/images --mask_root data/masks --model_path checkpoints/g_10000.pth --test --mask_mode 2
+```
+RFR-Net untuk mengisi lubang yang lebih kecil ditambahkan. Satu-satunya perbedaan adalah jumlah piksel yang lebih kecil yang diperbaiki di setiap iterasi. Jika Anda memperbaiki lubang kecil, Anda dapat menggunakan versi kode tersebut, untuk mendapatkan beberapa peningkatan.
+## Prosedur pelatihan
+Untuk sepenuhnya memanfaatkan kinerja jaringan, kami menyarankan untuk menggunakan prosedur pelatihan berikut, khususnya:
+
+1. Latih jaringan, yaitu gunakan perintah
+```
+python run.py
+```
+
+2. Sempurnakan jaringan, mis. gunakan perintah
+```
+python run.py --finetune --model_path path-to-trained-generator
+```
+
+3. Uji modelnya
+```
+python run.py --test
+```
+## Berapa lama melatih model
+
+Semua deskripsi di bawah ini dengan asumsi ukuran mini-batch adalah 6
+
+Untuk Kumpulan Data Paris Street View, latih model untuk 400.000 iterasi dan sempurnakan untuk 200.000 iterasi. (Total 600.000)
+
+Untuk CelebA Dataset, latih model untuk 350.000 iterasi dan sempurnakan untuk 150.000 iterasi. (totalnya 500.000)
+
+Untuk Kumpulan Data Tantangan Places2, latih model untuk 2.000.000 iterasi dan sempurnakan untuk 1.000.000 iterasi. (total 3.000.000)
+
+## Organisasi kode ini
+
+Bagian ini untuk orang yang ingin membangun metode mereka sendiri berdasarkan kode ini.
+
+Inti dari kode ini adalah file `model.py`. Secara khusus, ini mendefinisikan organisasi t
